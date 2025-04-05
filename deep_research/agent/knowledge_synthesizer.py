@@ -116,7 +116,7 @@ class KnowledgeSynthesizer:
         6. Preserving specific details, quotes, data points, and methodological information
         7. Identifying the most promising questions for future research
         
-        Your synthesis should be extremely thorough (800-1000+ words) and maintain the rich detail from all iterations.
+        Your synthesis should be extremely thorough (2000-3000+ words) and maintain the rich detail from all iterations.
         
         IMPORTANT: When writing mathematical expressions like n^2, log^2 n, etc., 
         write them plainly without using special formatting or template variables."""

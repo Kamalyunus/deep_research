@@ -227,12 +227,12 @@ class ResearchExecutor:
                     
                     # Include more content for analysis - up to 3000 chars per paper
                     content_preview = result.page_content
-                    if len(content_preview) > 9000:
+                    if len(content_preview) > 16000:
                         # Take beginning, middle and end to get a better overview
                         content_len = len(content_preview)
-                        begin = content_preview[:3000]
-                        middle = content_preview[content_len//2-1500:content_len//2+1500]
-                        end = content_preview[-3000:]
+                        begin = content_preview[:5000]
+                        middle = content_preview[content_len//2-3000:content_len//2+3000]
+                        end = content_preview[-5000:]
                         sources_text += f"Content Beginning: {begin}...\n\n"
                         sources_text += f"Content Middle: {middle}...\n\n"
                         sources_text += f"Content End: {end}...\n\n"

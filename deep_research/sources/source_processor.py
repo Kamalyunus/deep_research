@@ -75,8 +75,8 @@ class SourceProcessor:
                 for section_name, section_text in paper_sections.items():
                     content_display += f"\n--- {section_name.upper()} ---\n"
                     # Limit each section to reasonable length
-                    if len(section_text) > 6000:
-                        content_display += f"{section_text[:6000]}...\n"
+                    if len(section_text) > 10000:
+                        content_display += f"{section_text[:10000]}...\n"
                     else:
                         content_display += f"{section_text}\n"
             else:
@@ -152,18 +152,18 @@ class SourceProcessor:
                     for section_name, section_text in web_sections.items():
                         content_display += f"\n--- {section_name.upper()} ---\n"
                         # Limit each section to reasonable length
-                        if len(section_text) > 2000:
-                            content_display += f"{section_text[:2000]}...\n"
+                        if len(section_text) > 5000:
+                            content_display += f"{section_text[:5000]}...\n"
                         else:
                             content_display += f"{section_text}\n"
                 else:
                     # If sections couldn't be identified, use a preview approach
-                    if len(full_content) > 5000:
+                    if len(full_content) > 12000:
                         # Take beginning, middle, and end for better coverage
-                        content_display = f"{full_content[:1500]}...\n\n"
-                        middle_start = len(full_content) // 2 - 750
-                        content_display += f"[Middle content]\n{full_content[middle_start:middle_start+1500]}...\n\n"
-                        content_display += f"[End content]\n{full_content[-1500:]}"
+                        content_display = f"{full_content[:3000]}...\n\n"
+                        middle_start = len(full_content) // 2 - 1500
+                        content_display += f"[Middle content]\n{full_content[middle_start:middle_start+3000]}...\n\n"
+                        content_display += f"[End content]\n{full_content[-3000:]}"
                     else:
                         content_display = full_content
             else:
@@ -197,8 +197,8 @@ class SourceProcessor:
     @staticmethod
     def chunk_content(
         content: str, 
-        chunk_size: int = 16000, 
-        chunk_overlap: int = 1000
+        chunk_size: int = 24000, 
+        chunk_overlap: int = 2000
     ) -> List[str]:
         """
         Split content into manageable chunks with larger size and overlap.

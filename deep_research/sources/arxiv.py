@@ -96,7 +96,7 @@ def process_papers(papers: List[Document]) -> List[Dict[str, Any]]:
     return paper_info
 
 # Use the chunk_content function from SourceProcessor instead of duplicating
-def chunk_paper_content(paper: Document, chunk_size: int = 16000, chunk_overlap: int = 1000) -> List[str]:
+def chunk_paper_content(paper: Document, chunk_size: int = 24000, chunk_overlap: int = 2000) -> List[str]:
     """
     Split paper content into manageable chunks with larger size and more overlap.
     

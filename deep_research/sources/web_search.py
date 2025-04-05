@@ -96,7 +96,7 @@ def search_web(
             raise SourceError(f"Failed to search the web: {str(e)}", 
                              {"query": query})
 
-def fetch_webpage_content(url: str, max_content_length: int = 8000) -> tuple:
+def fetch_webpage_content(url: str, max_content_length: int = 24000) -> tuple:
     """
     Fetch and extract main content from a webpage.
     

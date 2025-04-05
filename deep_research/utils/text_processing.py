@@ -163,7 +163,7 @@ def safe_process_text(text: Optional[str]) -> str:
     
     return text
 
-def chunk_text(text: str, chunk_size: int = 16000, chunk_overlap: int = 1000) -> List[str]:
+def chunk_text(text: str, chunk_size: int = 24000, chunk_overlap: int = 2000) -> List[str]:
     """
     Split text into manageable chunks with specified size and overlap.
     

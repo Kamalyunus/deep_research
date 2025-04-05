@@ -1,0 +1,8 @@
+research_outputs/
+deep_research/config/__pycache__/
+deep_research/utils/__pycache__/
+deep_research/agent/__pycache__/
+deep_research/sources/__pycache__/
+deep_research/ui/__pycache__/
+deep_research/__pycache__/
+deep_research.egg-info/

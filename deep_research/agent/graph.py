@@ -116,30 +116,3 @@ def create_research_graph(plan_chain, execute_iteration_fn, synthesize_knowledge
     workflow.set_entry_point("generate_plan")
     
     return workflow
-
-class ResearchGraphState:
-    """
-    State class for managing the research graph execution state.
-    """
-    def __init__(self, topic, max_iterations=3):
-        self.state = {
-            "topic": topic,
-            "max_iterations": max_iterations,
-            "iteration": 1,
-            "current_task_index": 0,
-            "status": "not_started",
-            "iterations": [],
-            "accumulated_knowledge": ""
-        }
-    
-    def update(self, new_state):
-        """
-        Update the state with new values.
-        """
-        self.state.update(new_state)
-    
-    def get(self):
-        """
-        Get the current state.
-        """
-        return self.state.copy()

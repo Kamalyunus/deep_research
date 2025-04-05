@@ -112,99 +112,6 @@ def display_research_iteration_results(
         else:
             st.info("No further questions were generated in this iteration.")
 
-def display_spinner_with_status(
-    function: Callable, 
-    status_msg: str,
-    success_msg: Optional[str] = None,
-    error_msg: Optional[str] = None,
-    *args, **kwargs
-):
-    """
-    Execute a function with a spinner and status messages.
-    
-    Args:
-        function: Function to execute
-        status_msg: Message to display during execution
-        success_msg: Message to display on success (optional)
-        error_msg: Message to display on error (optional)
-        *args, **kwargs: Arguments to pass to the function
-        
-    Returns:
-        Result of the function call
-    """
-    with st.spinner(status_msg):
-        try:
-            start_time = time.time()
-            result = function(*args, **kwargs)
-            execution_time = time.time() - start_time
-            
-            if success_msg:
-                st.success(f"{success_msg} (Completed in {execution_time:.2f}s)")
-            return result
-        except Exception as e:
-            if error_msg:
-                st.error(f"{error_msg}: {str(e)}")
-            logger.error(f"Error in {function.__name__}: {e}")
-            raise
-
-def display_collapsible_code(code: str, language: str = "python", label: str = "Show code"):
-    """
-    Display collapsible code in the UI.
-    
-    Args:
-        code: Code to display
-        language: Programming language for syntax highlighting
-        label: Label for the expander
-    """
-    with st.expander(label):
-        st.code(code, language=language)
-
-def display_task_summary(
-    task_id: int,
-    task_description: str,
-    detail_level: str,
-    knowledge: str,
-    papers: List[Dict[str, Any]],
-    web_results: List[Dict[str, Any]]
-) -> None:
-    """
-    Display a summary of a task after completion.
-    
-    Args:
-        task_id: ID of the task
-        task_description: Description of the task
-        detail_level: Detail level used for the task
-        knowledge: Accumulated knowledge for the task
-        papers: Papers used for the task
-        web_results: Web results used for the task
-    """
-    st.markdown(f"### Task {task_id} Summary")
-    st.markdown(f"**Task:** {task_description}")
-    st.markdown(f"**Detail Level:** {detail_level}")
-    
-    # Display knowledge and sources in tabs
-    tabs = st.tabs(["Accumulated Knowledge", "Sources Used"])
-    
-    with tabs[0]:
-        st.markdown(knowledge)
-    
-    with tabs[1]:
-        if papers:
-            st.markdown("#### ArXiv Papers")
-            for i, paper in enumerate(papers):
-                paper_id = str(paper.get('id', '')).lower().replace('arxiv:', '').strip()
-                fixed_url = f"https://arxiv.org/abs/{paper_id}"
-                st.markdown(f"{i+1}. [{paper.get('title', 'Untitled')}]({fixed_url}) by {paper.get('authors', 'Unknown')}")
-        else:
-            st.info("No ArXiv papers were used for this task.")
-            
-        if web_results:
-            st.markdown("#### Web Sources")
-            for i, result in enumerate(web_results):
-                st.markdown(f"{i+1}. [{result.get('title', 'Untitled')}]({result.get('url', '#')})")
-        else:
-            st.info("No web sources were used for this task.")
-
 def display_configuration_form(
     tasks: List[Dict[str, Any]],
     max_iterations: int = 5,
@@ -278,29 +185,6 @@ def display_configuration_form(
             return task_config
         else:
             return None
-
-def display_research_report(
-    report: str,
-    filename: Optional[str] = None,
-    allow_download: bool = True
-) -> None:
-    """
-    Display a research report with download option.
-    
-    Args:
-        report: Research report text
-        filename: Filename for download (optional)
-        allow_download: Whether to show download button
-    """
-    st.markdown(report)
-    
-    if allow_download and filename:
-        download_button = st.download_button(
-            label="Download Report",
-            data=report,
-            file_name=filename,
-            mime="text/markdown"
-        )
 
 def display_error_message(
     error: Exception,

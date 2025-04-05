@@ -222,40 +222,6 @@ def format_metadata_table(metadata: Dict[str, Any]) -> str:
     
     return table
 
-def format_filename(topic: str, suffix: str = "") -> str:
-    """
-    Format a filename from a topic, ensuring it's valid for file systems.
-    
-    Args:
-        topic: The topic to use for the filename
-        suffix: Optional suffix to add (e.g., timestamp)
-        
-    Returns:
-        Sanitized filename
-    """
-    # Replace invalid filename characters
-    sanitized_topic = re.sub(r'[\\/*?:"<>|]', "_", topic)
-    sanitized_topic = re.sub(r'\s+', "_", sanitized_topic)
-    
-    # Truncate if too long
-    if len(sanitized_topic) > 50:
-        sanitized_topic = sanitized_topic[:50]
-    
-    # Add suffix if provided
-    if suffix:
-        return f"{sanitized_topic}_{suffix}"
-    else:
-        return sanitized_topic
-
-def format_timestamp() -> str:
-    """
-    Get a formatted timestamp for filenames.
-    
-    Returns:
-        Formatted timestamp string
-    """
-    return datetime.now().strftime("%Y%m%d-%H%M%S")
-
 def format_research_summary(
     topic: str,
     objective: str,

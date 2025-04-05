@@ -7,58 +7,11 @@ from typing import Dict, List, Any, Optional, Type, TypeVar, Callable, Union
 import logging
 from pydantic import BaseModel, ValidationError
 
-from .error_handling import ParsingError
+from .error_handling import ParsingError, extract_json_from_text
 
 logger = logging.getLogger(__name__)
 
 T = TypeVar('T', bound=BaseModel)
-
-def extract_json_from_text(text: str) -> Dict[str, Any]:
-    """
-    Extract a JSON object from text that may contain markdown and other content.
-    
-    Args:
-        text: Text potentially containing JSON
-        
-    Returns:
-        Extracted JSON as a dictionary
-        
-    Raises:
-        ParsingError: If JSON cannot be extracted
-    """
-    # Pattern 1: Look for content between ```json and ```
-    json_block_pattern = r'```(?:json)?\s*([\s\S]*?)\s*```'
-    json_blocks = re.findall(json_block_pattern, text)
-    
-    if json_blocks:
-        for block in json_blocks:
-            try:
-                return json.loads(block.strip())
-            except json.JSONDecodeError:
-                continue
-    
-    # Pattern 2: Try to find JSON by looking for { and } braces
-    try:
-        start_idx = text.find('{')
-        end_idx = text.rfind('}') + 1
-        if start_idx >= 0 and end_idx > start_idx:
-            json_str = text[start_idx:end_idx]
-            return json.loads(json_str)
-    except json.JSONDecodeError:
-        pass
-    
-    # Pattern 3: Try to find JSON array by looking for [ and ] brackets
-    try:
-        start_idx = text.find('[')
-        end_idx = text.rfind(']') + 1
-        if start_idx >= 0 and end_idx > start_idx:
-            json_str = text[start_idx:end_idx]
-            return json.loads(json_str)
-    except json.JSONDecodeError:
-        pass
-    
-    # If all patterns fail, raise an error
-    raise ParsingError("Could not extract valid JSON from text", {"text_preview": text[:500]})
 
 def parse_pydantic_from_text(
     text: str, 
@@ -227,54 +180,6 @@ def validate_required_fields(data: Dict[str, Any], required_fields: List[str]) -
             missing_fields.append(field)
     
     return missing_fields
-
-def try_parse_json(text: str) -> Union[Dict[str, Any], List[Any], None]:
-    """
-    Attempt to parse JSON from text, returning None if parsing fails.
-    
-    Args:
-        text: Text to parse as JSON
-        
-    Returns:
-        Parsed JSON data or None if parsing fails
-    """
-    try:
-        return json.loads(text)
-    except json.JSONDecodeError:
-        return None
-
-def extract_numbers(text: str) -> List[float]:
-    """
-    Extract numbers from text.
-    
-    Args:
-        text: Text containing numbers
-        
-    Returns:
-        List of extracted numbers
-    """
-    # Pattern for integers and floats
-    pattern = r'[-+]?[0-9]*\.?[0-9]+(?:[eE][-+]?[0-9]+)?'
-    
-    return [float(match) for match in re.findall(pattern, text)]
-
-def parse_boolean(value: Union[str, bool]) -> bool:
-    """
-    Parse a boolean value from various formats.
-    
-    Args:
-        value: Value to parse
-        
-    Returns:
-        Boolean value
-    """
-    if isinstance(value, bool):
-        return value
-    
-    if isinstance(value, str):
-        return value.lower() in ['true', 'yes', 'y', '1', 'on']
-    
-    return bool(value)
 
 def clean_and_parse_json(text: str) -> Dict[str, Any]:
     """

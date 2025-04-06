@@ -28,12 +28,24 @@ from deep_research.config.app_config import (
     SESSION_KEYS
 )
 
+# Configure application-wide logging
+from deep_research.utils.logger import configure_root_logger, get_logger
+
+# Initialize root logger
+configure_root_logger(level="info", log_to_file=True)
+
+# Get a logger for this module
+logger = get_logger(__name__)
+
 # Set up page configuration
 st.set_page_config(
     page_title="Deep Research Agent",
     page_icon="🔬",
     layout="wide"
 )
+
+# Log application startup
+logger.info("Deep Research Agent application starting up")
 
 # Initialize session state variables
 if SESSION_KEYS["messages"] not in st.session_state:

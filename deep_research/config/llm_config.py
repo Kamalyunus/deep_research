@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 DEFAULT_MODEL = "phi4:latest"
 DEFAULT_API_BASE = "http://localhost:11434"
 DEFAULT_TEMPERATURE = 0.3
-DEFAULT_CONTEXT_SIZE = 40960  # Maximum context window
+DEFAULT_CONTEXT_SIZE = 1024*20  # Maximum context window
 
 # Configuration presets for different tasks
 LLM_CONFIG_PRESETS = {

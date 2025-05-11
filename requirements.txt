@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 # Core streamlit framework
 streamlit>=1.25.0
 
@@ -27,3 +28,29 @@ pymupdf>=1.25.0
 
 # Resiliency
 tenacity>=9.0.0
+=======
+# Core streamlit framework
+streamlit>=1.25.0
+
+# LangChain components
+langchain>=0.1.0
+langchain-core>=0.1.0
+langchain-community>=0.0.13
+langchain-text-splitters>=0.0.1
+langchain-ollama>=0.0.1
+
+# LangGraph for workflow management
+langgraph>=0.0.10
+
+# Data modeling
+pydantic>=2.0.0
+
+# Network requests
+requests>=2.31.0
+
+# Source processing
+arxiv>=1.4.7
+
+# Resiliency
+tenacity>=8.2.3
+>>>>>>> Stashed changes
